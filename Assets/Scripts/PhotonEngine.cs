@@ -1,8 +1,10 @@
 ﻿using System;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class PhotonEngine : MonoBehaviour {
+public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     private static PhotonEngine Instance;
+    private PhotonPeer peer;
 
     private void Awake() {
         if (Instance == null) {
@@ -13,4 +15,32 @@ public class PhotonEngine : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    private void Start() {
+        peer = new PhotonPeer(this, ConnectionProtocol.Udp);
+        peer.Connect("127.0.0.1:5055", "PosSynServer"); //连接服务器
+    }
+
+    private void Update() {
+        if (peer.PeerState == PeerStateValue.Connected) { //已经连接
+            peer.Service(); //保证与服务器的连接
+        }
+    }
+
+    private void OnDestroy() {
+        if (peer != null && peer.PeerState == PeerStateValue.Disconnected) { //判断连接状态
+            peer.Disconnect(); //断开连接
+        }
+    }
+
+    public void DebugReturn(DebugLevel level, string message) { }
+
+    //返回至客户端的响应
+    public void OnOperationResponse(OperationResponse operationResponse) { }
+
+    //连接状态发生改变
+    public void OnStatusChanged(StatusCode statusCode) { }
+
+    //服务器向客户端发送事件
+    public void OnEvent(EventData eventData) { }
 }
