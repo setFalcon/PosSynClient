@@ -22,9 +22,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     }
 
     private void Update() {
-        if (peer.PeerState == PeerStateValue.Connected) { //已经连接
-            peer.Service(); //保证与服务器的连接
-        }
+        peer?.Service(); //保证与服务器的连接
     }
 
     private void OnDestroy() {
@@ -39,7 +37,9 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     public void OnOperationResponse(OperationResponse operationResponse) { }
 
     //连接状态发生改变
-    public void OnStatusChanged(StatusCode statusCode) { }
+    public void OnStatusChanged(StatusCode statusCode) {
+        Debug.Log(statusCode);
+    }
 
     //服务器向客户端发送事件
     public void OnEvent(EventData eventData) { }
