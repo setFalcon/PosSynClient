@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     private static PhotonEngine Instance;
-    private PhotonPeer peer;
+    private static PhotonPeer peer;
+
+    public static PhotonPeer Peer => peer;
 
     private void Awake() {
         if (Instance == null) {
