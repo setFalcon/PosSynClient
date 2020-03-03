@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
@@ -40,6 +41,11 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
         switch (operationResponse.OperationCode) {
             case 1:
                 Debug.Log("收到服务端的响应");
+                Dictionary<byte,object> data = operationResponse.Parameters;
+                object stringValue;
+                data.TryGetValue(1, out stringValue);
+                Debug.Log("服务端回复 : "+stringValue);
+
                 break;
             default: break;
         }
