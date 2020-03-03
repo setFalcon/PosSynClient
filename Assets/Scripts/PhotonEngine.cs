@@ -44,7 +44,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
                 Dictionary<byte,object> data = operationResponse.Parameters;
                 object stringValue;
                 data.TryGetValue(1, out stringValue);
-                Debug.Log("服务端回复 : "+stringValue);
+                Debug.Log("服务端响应回复 : "+stringValue);
 
                 break;
             default: break;
@@ -57,5 +57,15 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     }
 
     //服务器向客户端发送事件
-    public void OnEvent(EventData eventData) { }
+    public void OnEvent(EventData eventData) {
+        switch (eventData.Code) {
+            case 1:
+                Dictionary<byte,object> eventdata = eventData.Parameters;
+                object stringValue;
+                eventdata.TryGetValue(1, out stringValue);
+                Debug.Log("服务端事件回复 : "+stringValue);
+                break;
+            default: break;
+        }
+    }
 }
