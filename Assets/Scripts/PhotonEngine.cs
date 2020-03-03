@@ -36,7 +36,14 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     public void DebugReturn(DebugLevel level, string message) { }
 
     //返回至客户端的响应
-    public void OnOperationResponse(OperationResponse operationResponse) { }
+    public void OnOperationResponse(OperationResponse operationResponse) {
+        switch (operationResponse.OperationCode) {
+            case 1:
+                Debug.Log("收到服务端的响应");
+                break;
+            default: break;
+        }
+    }
 
     //连接状态发生改变
     public void OnStatusChanged(StatusCode statusCode) {
