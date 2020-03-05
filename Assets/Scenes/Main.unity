@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 36010096}
   - component: {fileID: 36010098}
   - component: {fileID: 36010099}
+  - component: {fileID: 36010100}
   m_Layer: 5
   m_Name: LoginPanel
   m_TagString: Untagged
@@ -220,6 +221,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   registerPanel: {fileID: 667496117}
+--- !u!114 &36010100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36010094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3481fa3ae1ee048a39523c4abe994f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &58782164
 GameObject:
   m_ObjectHideFlags: 0
