@@ -7,8 +7,11 @@ public class LoginRequest : Request {
     [HideInInspector] public string Username;
     [HideInInspector] public string Password;
 
+    private LoginPanel _loginPanel;
+    
     private void Awake() {
         OpCode = OperationCode.Login;
+        _loginPanel = GetComponent<LoginPanel>();
     }
 
     public override void DefaultRequest() { //发起请求的代码
@@ -19,5 +22,7 @@ public class LoginRequest : Request {
     }
 
     public override void OnOperationResponse(OperationResponse resp) { //处理响应的代码
+        ReturnCode returnCode = (ReturnCode) resp.ReturnCode;
+        _loginPanel.OnLoginResponse(returnCode);
     }
 }

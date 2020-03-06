@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using ConnectBridge;
+using ConnectBridge.Util;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LoginPanel : MonoBehaviour {
@@ -7,6 +9,7 @@ public class LoginPanel : MonoBehaviour {
     private InputField _usernameInputField;
     private InputField _passwordInputField;
     private LoginRequest _loginRequest;
+    private GameObject _hintMessage;
     public GameObject registerPanel;
 
     private void Awake() {
@@ -15,6 +18,8 @@ public class LoginPanel : MonoBehaviour {
         _usernameInputField = GameObject.Find("Canvas/LoginPanel/UsernameInputField").GetComponent<InputField>();
         _passwordInputField = GameObject.Find("Canvas/LoginPanel/PasswordInputField").GetComponent<InputField>();
         _loginRequest = GetComponent<LoginRequest>();
+        _hintMessage = GameObject.Find("Canvas/LoginPanel/HintMessage");
+        _hintMessage.SetActive(false);
     }
 
     private void Start() {
@@ -24,12 +29,23 @@ public class LoginPanel : MonoBehaviour {
 
     private void OnLoginButtonClick() {
         _loginRequest.Username = _usernameInputField.text;
-        _loginRequest.Password = _passwordInputField.text;
+        _loginRequest.Password = MD5Util.GetMD5(_passwordInputField.text);
         _loginRequest.DefaultRequest();
     }
 
     private void OnRegisterButtonClick() {
         registerPanel.SetActive(true);
         gameObject.SetActive(false);
+    }
+
+    public void OnLoginResponse(ReturnCode returnCode) {
+        if (returnCode == ReturnCode.LoginSuccess) {
+            _hintMessage.SetActive(false);
+            gameObject.SetActive(false);
+
+        }
+        else if(returnCode == ReturnCode.LoginFailed){
+            _hintMessage.SetActive(true);
+        }
     }
 }
