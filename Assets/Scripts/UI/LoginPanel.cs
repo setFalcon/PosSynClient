@@ -1,6 +1,7 @@
 ﻿using ConnectBridge;
 using ConnectBridge.Util;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoginPanel : MonoBehaviour {
@@ -43,6 +44,7 @@ public class LoginPanel : MonoBehaviour {
         if (returnCode == ReturnCode.LoginSuccess) {
             _hintMessage.SetActive(false);
             gameObject.SetActive(false);
+            SceneManager.LoadScene("Game");
 
         }
         else if(returnCode == ReturnCode.LoginFailed){

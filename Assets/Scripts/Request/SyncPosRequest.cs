@@ -14,9 +14,9 @@ public class SyncPosRequest : Request {
 
     public override void DefaultRequest() {
         Dictionary<byte, object> data = new Dictionary<byte, object>();
-        data.Add((byte) ParameterCode.Position, new Vector3Data {
-            x = position.x, y = position.y, z = position.z
-        });
+        data.Add((byte) ParameterCode.PositionX, position.x);
+        data.Add((byte) ParameterCode.PositionY, position.y);
+        data.Add((byte) ParameterCode.PositionZ, position.z);
         PhotonEngine.Peer.OpCustom((byte) OperationCode.SyncPos, data, true);
     }
 
