@@ -1290,13 +1290,14 @@ GameObject:
   - component: {fileID: 667496120}
   - component: {fileID: 667496119}
   - component: {fileID: 667496122}
+  - component: {fileID: 667496123}
   m_Layer: 5
   m_Name: RegisterPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &667496118
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1384,7 +1385,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f010c8342f934949bce78371ae0e059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginPanel: {fileID: 36010094}
+--- !u!114 &667496123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667496117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647cc55ca7d07a344aee84c08ff1d18f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OpCode: 0
+  Username: 
+  Password: 
 --- !u!1 &710128845
 GameObject:
   m_ObjectHideFlags: 0

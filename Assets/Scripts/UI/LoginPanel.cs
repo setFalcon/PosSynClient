@@ -10,7 +10,7 @@ public class LoginPanel : MonoBehaviour {
     private InputField _passwordInputField;
     private LoginRequest _loginRequest;
     private GameObject _hintMessage;
-    public GameObject registerPanel;
+    private GameObject _registerPanel;
 
     private void Awake() {
         _loginButton = GameObject.Find("Canvas/LoginPanel/LoginButton").GetComponent<Button>();
@@ -20,6 +20,7 @@ public class LoginPanel : MonoBehaviour {
         _loginRequest = GetComponent<LoginRequest>();
         _hintMessage = GameObject.Find("Canvas/LoginPanel/HintMessage");
         _hintMessage.SetActive(false);
+        _registerPanel = GameObject.Find("Canvas/RegisterPanel");
     }
 
     private void Start() {
@@ -34,7 +35,7 @@ public class LoginPanel : MonoBehaviour {
     }
 
     private void OnRegisterButtonClick() {
-        registerPanel.SetActive(true);
+        _registerPanel.SetActive(true);
         gameObject.SetActive(false);
     }
 
