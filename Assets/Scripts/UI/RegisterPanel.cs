@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using ConnectBridge;
+using ConnectBridge.Util;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class RegisterPanel : MonoBehaviour {
@@ -34,7 +36,16 @@ public class RegisterPanel : MonoBehaviour {
 
     private void OnRegisterButtonClick() {
         _registerRequest.Username = _usernameInputField.text;
-        _registerRequest.Password = _passwordInputField.text;
+        _registerRequest.Password = MD5Util.GetMD5(_passwordInputField.text);
         _registerRequest.DefaultRequest();
+    }
+
+    public void OnRegisterResponse(ReturnCode returnCode) {
+        if (returnCode == ReturnCode.RegisterSuccess) {
+            _hintMessage.SetActive(false);
+            OnBackButtonClick();
+        }else if (returnCode == ReturnCode.RegisterFailed) {
+            _hintMessage.SetActive(true);
+        }
     }
 }
