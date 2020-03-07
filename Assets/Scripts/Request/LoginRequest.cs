@@ -23,6 +23,9 @@ public class LoginRequest : Request {
 
     public override void OnOperationResponse(OperationResponse resp) { //处理响应的代码
         ReturnCode returnCode = (ReturnCode) resp.ReturnCode;
+        if (returnCode == ReturnCode.LoginSuccess) {
+            PhotonEngine.Username = Username;
+        }
         _loginPanel.OnLoginResponse(returnCode);
     }
 }

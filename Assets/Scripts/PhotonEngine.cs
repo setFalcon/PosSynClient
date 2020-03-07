@@ -7,11 +7,13 @@ using UnityEngine;
 public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     public static PhotonEngine Instance;
     private static PhotonPeer peer;
-
+    
     public static PhotonPeer Peer => peer;
 
     private Dictionary<OperationCode, Request> requestDict = new Dictionary<OperationCode, Request>(); //请求字典
 
+    public static string Username;
+    
     public void AddRequest(Request req) { //向字典中添加请求
         requestDict.Add(req.OpCode, req);
     }
