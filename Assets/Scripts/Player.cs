@@ -5,10 +5,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     public bool isLocalPlayer = true;
+    private SyncPosRequest _syncPosRequest;
+    private Vector3 lastPosition = Vector3.zero;
+    private float moveOffset = 0.1f;
 
     private void Start() {
         if (isLocalPlayer) {
             GetComponent<Renderer>().sharedMaterial.color = Color.green;
+            _syncPosRequest = GetComponent<SyncPosRequest>();
+            InvokeRepeating(nameof(SyncPosition), 3f, 0.05f);
+        }
+    }
+
+
+    void SyncPosition() {
+        if (Vector3.Distance(transform.position, lastPosition) > moveOffset) {
+            _syncPosRequest.position = transform.position;
+            _syncPosRequest.DefaultRequest();
+            lastPosition = transform.position;
         }
     }
 
