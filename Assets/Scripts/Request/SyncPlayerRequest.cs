@@ -8,8 +8,11 @@ using LitJson;
 using UnityEngine;
 
 public class SyncPlayerRequest : Request {
+    private Player _player;
+    
     private void Awake() {
         OpCode = OperationCode.SyncPlayer;
+        _player = GetComponent<Player>();
     }
 
     public override void DefaultRequest() {
@@ -19,8 +22,6 @@ public class SyncPlayerRequest : Request {
     public override void OnOperationResponse(OperationResponse resp) {
         string usernameListJson = (string) DictUtil.GetValue(resp.Parameters, (byte) ParameterCode.UsernameList);
         List<string> usernameList = JsonMapper.ToObject<List<string>>(usernameListJson);
-        foreach (string name in usernameList) {
-            Debug.Log(name);
-        }
+        _player.OnSyncPlayerResponse(usernameList);
     }
 }

@@ -10,6 +10,9 @@ public class Player : MonoBehaviour {
     private SyncPlayerRequest _syncPlayerRequest;
     private Vector3 lastPosition = Vector3.zero;
     private float moveOffset = 0.1f;
+    public GameObject playerPrefab;
+    
+    private Dictionary<string, GameObject> playerDict = new Dictionary<string, GameObject>();
 
     private void Start() {
         if (isLocalPlayer) {
@@ -27,6 +30,18 @@ public class Player : MonoBehaviour {
             _syncPosRequest.position = transform.position;
             _syncPosRequest.DefaultRequest();
             lastPosition = transform.position;
+        }
+    }
+
+    //创建其他客户端player
+    public void OnSyncPlayerResponse(List<string> usernameList) {
+        foreach (string u in usernameList) {
+            GameObject otherplayer = Instantiate(playerPrefab);
+            Destroy(otherplayer.GetComponent<SyncPosRequest>());
+            Destroy(otherplayer.GetComponent<SyncPlayerRequest>());
+            otherplayer.GetComponent<Player>().isLocalPlayer = false;
+            otherplayer.GetComponent<Player>().username = u;
+            playerDict.Add(username,otherplayer);
         }
     }
 
