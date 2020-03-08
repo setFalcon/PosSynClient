@@ -2,7 +2,7 @@
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public abstract class Request : MonoBehaviour {
+public abstract class RequestBase : MonoBehaviour {
     [HideInInspector] public OperationCode OpCode; //操作码
     public abstract void DefaultRequest(); //请求
     public abstract void OnOperationResponse(OperationResponse resp); //响应

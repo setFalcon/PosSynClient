@@ -7,7 +7,7 @@ using ExitGames.Client.Photon;
 using LitJson;
 using UnityEngine;
 
-public class SyncPlayerRequest : Request {
+public class SyncPlayerRequest : RequestBase {
     private Player _player;
     
     private void Awake() {

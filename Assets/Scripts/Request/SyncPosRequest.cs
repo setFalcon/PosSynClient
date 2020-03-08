@@ -5,7 +5,7 @@ using ConnectBridge;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class SyncPosRequest : Request {
+public class SyncPosRequest : RequestBase {
     [HideInInspector] public Vector3 position;
 
     private void Awake() {

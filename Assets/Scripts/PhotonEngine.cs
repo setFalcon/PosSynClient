@@ -1,25 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConnectBridge;
+using Event;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     public static PhotonEngine Instance;
     private static PhotonPeer peer;
-    
+
     public static PhotonPeer Peer => peer;
 
-    private Dictionary<OperationCode, Request> requestDict = new Dictionary<OperationCode, Request>(); //请求字典
+    private Dictionary<OperationCode, RequestBase> requestDict = new Dictionary<OperationCode, RequestBase>(); //请求字典
+    private Dictionary<EventCode, EventBase> eventDict = new Dictionary<EventCode, EventBase>(); //请求字典
 
     public static string Username;
-    
-    public void AddRequest(Request req) { //向字典中添加请求
+
+    public void AddRequest(RequestBase req) { //向字典中添加请求
         requestDict.Add(req.OpCode, req);
     }
 
-    public void RemoveRequest(Request req) { //移除字典中的请求
+    public void RemoveRequest(RequestBase req) { //移除字典中的请求
         requestDict.Remove(req.OpCode);
+    }
+
+    public void AddEvent(EventBase e) { //向字典中添加请求
+        eventDict.Add(e.eventCode, e);
+    }
+
+    public void RemoveEvent(EventBase e) { //移除字典中的请求
+        eventDict.Remove(e.eventCode);
     }
 
     private void Awake() {
@@ -52,7 +62,7 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
     //返回至客户端的响应
     public void OnOperationResponse(OperationResponse operationResponse) {
         OperationCode opCode = (OperationCode) operationResponse.OperationCode;
-        Request req;
+        RequestBase req;
         requestDict.TryGetValue(opCode, out req);
         if (req != null) {
             req.OnOperationResponse(operationResponse);
@@ -69,14 +79,14 @@ public class PhotonEngine : MonoBehaviour, IPhotonPeerListener {
 
     //服务器向客户端发送事件
     public void OnEvent(EventData eventData) {
-        switch (eventData.Code) {
-            case 1:
-                Dictionary<byte, object> eventdata = eventData.Parameters;
-                object stringValue;
-                eventdata.TryGetValue(1, out stringValue);
-                Debug.Log("服务端事件回复 : " + stringValue);
-                break;
-            default: break;
+        EventCode eventCode = (EventCode) eventData.Code;
+        EventBase e;
+        eventDict.TryGetValue(eventCode, out e);
+        if (e != null) {
+            e.OnEvent(eventData);
+        }
+        else {
+            Debug.Log("没有找到对应的响应 处理对象");
         }
     }
 }

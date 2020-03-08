@@ -3,7 +3,7 @@ using ConnectBridge;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class LoginRequest : Request {
+public class LoginRequest : RequestBase {
     [HideInInspector] public string Username;
     [HideInInspector] public string Password;
 

@@ -3,7 +3,7 @@ using ConnectBridge;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-public class RegisterRequest : Request {
+public class RegisterRequest : RequestBase {
     [HideInInspector] public string Username;
     [HideInInspector] public string Password;
     private RegisterPanel _registerPanel;
