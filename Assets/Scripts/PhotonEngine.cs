@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConnectBridge;
-using Event;
 using ExitGames.Client.Photon;
 using UnityEngine;
 

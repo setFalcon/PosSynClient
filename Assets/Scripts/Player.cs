@@ -36,13 +36,15 @@ public class Player : MonoBehaviour {
     //创建其他客户端player
     public void OnSyncPlayerResponse(List<string> usernameList) {
         foreach (string u in usernameList) {
-            GameObject otherplayer = Instantiate(playerPrefab);
-            Destroy(otherplayer.GetComponent<SyncPosRequest>());
-            Destroy(otherplayer.GetComponent<SyncPlayerRequest>());
-            otherplayer.GetComponent<Player>().isLocalPlayer = false;
-            otherplayer.GetComponent<Player>().username = u;
-            playerDict.Add(username,otherplayer);
+            OnNewPlayerEvent(u);
         }
+    }
+
+    public void OnNewPlayerEvent(string u) {
+        GameObject otherplayer = Instantiate(playerPrefab);
+        otherplayer.GetComponent<Player>().isLocalPlayer = false;
+        otherplayer.GetComponent<Player>().username = u;
+        playerDict.Add(username,otherplayer);
     }
 
     private void Update() {
