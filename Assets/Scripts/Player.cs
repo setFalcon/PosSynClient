@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using ConnectBridge;
+using ConnectBridge.Util;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -9,10 +11,14 @@ public class Player : MonoBehaviour {
     private SyncPosRequest _syncPosRequest;
     private SyncPlayerRequest _syncPlayerRequest;
     private Vector3 lastPosition = Vector3.zero;
-    private float moveOffset = 0.1f;
+    private float moveOffset = 0f;
     public GameObject playerPrefab;
-    
+
     private Dictionary<string, GameObject> playerDict = new Dictionary<string, GameObject>();
+
+    private void Awake() {
+        username = PhotonEngine.Username;
+    }
 
     private void Start() {
         if (isLocalPlayer) {
@@ -44,7 +50,16 @@ public class Player : MonoBehaviour {
         GameObject otherplayer = Instantiate(playerPrefab);
         otherplayer.GetComponent<Player>().isLocalPlayer = false;
         otherplayer.GetComponent<Player>().username = u;
-        playerDict.Add(username,otherplayer);
+        playerDict.Add(u, otherplayer);
+    }
+
+    public void OnSyncPositionEvent(List<PlayerPositionData> posData) {
+        foreach (PlayerPositionData data in posData) {
+            if (!username.Equals(data.Username)) {
+                GameObject player = DictUtil.GetValue(playerDict, data.Username);
+                player.transform.position = new Vector3((float) data.Pos.X, (float) data.Pos.Y, (float) data.Pos.Z);
+            }
+        }
     }
 
     private void Update() {
